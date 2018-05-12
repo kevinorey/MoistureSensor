@@ -17,11 +17,18 @@ void setup() {
   //Setting up pin 3 for moisture sensor power
   pinMode(3, OUTPUT);
 
+  //Setting up pin 2 for green led
+  pinMode(2, OUTPUT);
+
   //Setting up pin A0 for analog moisture sensor reading
   pinMode(sensor_pin, INPUT);
 
-  //Turning off moisture sensor power off by default
+  //Turning off all by default
+  digitalWrite(5, LOW);
+  digitalWrite(4, LOW);
   digitalWrite(3, LOW);
+  digitalWrite(2, LOW);
+
 
   Serial.println("Done setting up pins");
 
@@ -50,6 +57,12 @@ void loop() {
     digitalWrite(4, LOW);
     delay(1000);
 
+    digitalWrite(2, HIGH);
+    delay(1000);
+
+    digitalWrite(2, LOW);
+    delay(1000);
+
     count++;
   }
 
@@ -57,8 +70,8 @@ void loop() {
 
   Serial.println("Setting digital pin 3 high");
 
-  //Turn of red led light to indicate a read is taking place
-  digitalWrite(4, HIGH);
+  //Turn of green led light to indicate a read is taking place
+  digitalWrite(2, HIGH);
 
   //Turning on moisture sensor power
   digitalWrite(3, HIGH);
@@ -74,12 +87,17 @@ void loop() {
   Serial.print("Moisture % = ");
   Serial.println(output_value);
 
+  //Need to add some error handling here
+  //If we get an invalid signal need to turn on red light to indicate an error has
+  //occurred
+  //
+
   //Turn off moisture power sensor
   digitalWrite(3, LOW);
-  delay(2000);
+  delay(1000);
 
   //Turn off red light
-  digitalWrite(4, LOW);
+  digitalWrite(2, LOW);
 
   //Time to wait until next read of moisture sensor
   delay(5000);
