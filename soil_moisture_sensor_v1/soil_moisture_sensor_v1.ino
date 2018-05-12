@@ -82,9 +82,7 @@ void loop() {
   Serial.print("Value read = ");
   Serial.println(output_value);
 
-  //If we get an invalid signal need to turn on red light to indicate an error has
-  //occurred//
-
+  //If we get an invalid signal need to turn on red light to indicate an error has occurred
   if ( output_value > 1003 )
   {
     Serial.print("INVALID VALUE READ FROM SOIL MOISTURE SENSOR.  VALUE = ");
@@ -108,6 +106,17 @@ void loop() {
   
     //Turn off red light
     digitalWrite(2, LOW);
+
+    //Check to see if we need to water or not
+    //if less than 50 turn on blue light to indicate water is needed
+    if ( output_value <50 )
+    {
+      Serial.println("Time to water");
+      digitalWrite(5, HIGH);
+      delay(5000);
+
+      digitalWrite(5, LOW);
+    }
   }
 
   //Time to wait until next read of moisture sensor
