@@ -5,7 +5,7 @@ int BLUE_PIN = 5;
 int GREEN_PIN = 2;
 int MOISTURE_SENSOR_1 = 3;
 int NO_MOISTURE = 1003;
-int SATURATED_SOIL = 271;
+int SATURATED_SOIL = 200;
 int NEED_TO_WATER_LEVEL = 50;
 
 void setup() {
