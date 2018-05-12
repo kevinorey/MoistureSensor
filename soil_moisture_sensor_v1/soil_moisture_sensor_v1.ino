@@ -82,22 +82,33 @@ void loop() {
   Serial.print("Value read = ");
   Serial.println(output_value);
 
-  //Map read value to % of moisture
-  output_value = map(output_value, 684, 200, 0, 100);
-  Serial.print("Moisture % = ");
-  Serial.println(output_value);
-
-  //Need to add some error handling here
   //If we get an invalid signal need to turn on red light to indicate an error has
-  //occurred
-  //
+  //occurred//
 
-  //Turn off moisture power sensor
-  digitalWrite(3, LOW);
-  delay(1000);
+  if ( output_value > 1003 )
+  {
+    Serial.print("INVALID VALUE READ FROM SOIL MOISTURE SENSOR.  VALUE = ");
+    Serial.print(output_value);
+    digitalWrite(4, HIGH);
+    delay(5000);
 
-  //Turn off red light
-  digitalWrite(2, LOW);
+    digitalWrite(4, LOW);
+  }
+  else
+  {
+
+    //Map read value to % of moisture
+    output_value = map(output_value, 1003, 271, 0, 100);
+    Serial.print("Moisture % = ");
+    Serial.println(output_value);
+  
+    //Turn off moisture power sensor
+    digitalWrite(3, LOW);
+    delay(1000);
+  
+    //Turn off red light
+    digitalWrite(2, LOW);
+  }
 
   //Time to wait until next read of moisture sensor
   delay(5000);
