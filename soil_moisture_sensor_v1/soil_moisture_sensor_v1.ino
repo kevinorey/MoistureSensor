@@ -1,19 +1,25 @@
+/*
+ * Soil moisture sensor program
+ * Kevin Orey
+ */
+
 int sensor_pin = A0;
 int output_value;
-int RED_PIN = 4;
-int BLUE_PIN = 5;
-int GREEN_PIN = 2;
-int MOISTURE_SENSOR_1 = 3;
-int NO_MOISTURE = 1003;
-int SATURATED_SOIL = 200;
-int NEED_TO_WATER_LEVEL = 50;
+
+#define RED_PIN 4
+#define BLUE_PIN 5
+#define GREEN_PIN 2
+#define MOISTURE_SENSOR_1 3
+#define NO_MOISTURE 1003
+#define SATURATED_SOIL 200
+#define NEED_TO_WATER_LEVEL 50
 
 void setup() {
   
   //Setting up serial to port 9600 to help get println for debug
   Serial.begin(9600);
 
-  Serial.println("Setting up pins");
+  Serial.println(F("Setting up pins"));
 
   //Setting up pin 5 for blue led
   pinMode(BLUE_PIN, OUTPUT);
@@ -34,10 +40,10 @@ void setup() {
   digitalWrite(BLUE_PIN, LOW);
   digitalWrite(RED_PIN, LOW);
   digitalWrite(MOISTURE_SENSOR_1, LOW);
-  digitalWrite(2, LOW);
+  digitalWrite(GREEN_PIN, LOW);
 
 
-  Serial.println("Done setting up pins");
+  Serial.println(F("Done setting up pins"));
 
 }
 
@@ -46,11 +52,11 @@ int count = 0;
 void loop() {
   // put your main code here, to run repeatedly:
 
-  Serial.println("Starting of program");
+  Serial.println(F("Starting of program"));
 
   while ( count < 2)
   {
-    Serial.println("In while loop for lights");
+    Serial.println(F("In while loop for lights"));
     
     digitalWrite(BLUE_PIN, HIGH);
     delay(1000);
@@ -73,9 +79,9 @@ void loop() {
     count++;
   }
 
-  Serial.println("end of setup");
+  Serial.println(F("end of setup"));
 
-  Serial.println("Setting digital pin 3 high");
+  Serial.println(F("Setting digital pin 3 high"));
 
   //Turn of green led light to indicate a read is taking place
   digitalWrite(GREEN_PIN, HIGH);
@@ -118,7 +124,7 @@ void loop() {
     //if less than NEED_TO_WATER_LEVEL turn on blue light to indicate water is needed
     if ( output_value < NEED_TO_WATER_LEVEL )
     {
-      Serial.println("Time to water");
+      Serial.println(F("Time to water"));
       digitalWrite(BLUE_PIN, HIGH);
       delay(5000);
 
