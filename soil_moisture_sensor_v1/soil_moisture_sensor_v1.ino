@@ -3,7 +3,7 @@
  * Kevin Orey
  */
 
-int sensor_pin = A0;
+#define sensor_pin A0
 int output_value;
 
 /*
