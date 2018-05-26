@@ -6,6 +6,9 @@
 int sensor_pin = A0;
 int output_value;
 
+/*
+ * Use defines to save 4 bytes of int
+ */
 #define RED_PIN 4
 #define BLUE_PIN 5
 #define GREEN_PIN 2
