@@ -168,5 +168,13 @@ void loop() {
   }
 
   //Time to wait until next read of moisture sensor
+  lcd.print("Sleeping...");
   delay(5000);
+
+  lcd.clear();
+  lcd.print("Time to read sensors");
+
+  delay(100);
+  lcd.clear();
+  
 }
