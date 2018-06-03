@@ -3,6 +3,9 @@
  * Kevin Orey
  */
 
+ #include <LiquidCrystal.h>
+ LiquidCrystal lcd(12,11,6,7,8,9);
+
 #define sensor_pin A0
 int output_value;
 
@@ -18,6 +21,10 @@ int output_value;
 #define NEED_TO_WATER_LEVEL 50
 
 void setup() {
+
+  //Setup lcd screen
+  lcd.begin(16,2);
+  lcd.print("Starting program");
   
   //Setting up serial to port 9600 to help get println for debug
   Serial.begin(9600);
@@ -48,6 +55,9 @@ void setup() {
 
   Serial.println(F("Done setting up pins"));
 
+  lcd.clear();
+  lcd.print("Done setting up pins");
+
 }
 
 int count = 0;
@@ -55,6 +65,10 @@ int count = 0;
 void loop() {
   // put your main code here, to run repeatedly:
 
+  lcd.print("Starting program");
+  delay(100);
+  lcd.clear();
+  
   Serial.println(F("Starting of program"));
 
   while ( count < 2)
@@ -82,6 +96,11 @@ void loop() {
     count++;
   }
 
+
+  lcd.print("Done starting program");
+  delay(100);
+  lcd.clear();
+
   Serial.println(F("end of setup"));
 
   Serial.println(F("Setting digital pin 3 high"));
@@ -93,10 +112,19 @@ void loop() {
   digitalWrite(MOISTURE_SENSOR_1, HIGH);
   delay(100);
 
+  lcd.print("Reading sensor 1");
+  delay(100);
+  lcd.clear();
+  
   //Read moisture sensor from analog pin
   output_value = analogRead(sensor_pin);
   Serial.print("Value read = ");
   Serial.println(output_value);
+
+  lcd.print("Value read = ");
+  lcd.print(output_value);
+  delay(1000);
+  lcd.clear();
 
   //If we get an invalid signal need to turn on red light to indicate an error has occurred
   if ( output_value > NO_MOISTURE )
@@ -129,7 +157,11 @@ void loop() {
     {
       Serial.println(F("Time to water"));
       digitalWrite(BLUE_PIN, HIGH);
+
+      lcd.print("Time to water!!");
       delay(5000);
+
+      lcd.clear();
 
       digitalWrite(BLUE_PIN, LOW);
     }
