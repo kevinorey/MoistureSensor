@@ -3,8 +3,16 @@
  * Kevin Orey
  */
 
- #include <LiquidCrystal.h>
- LiquidCrystal lcd(12,11,6,7,8,9);
+#include <LiquidCrystal.h>
+
+const int db7 = 6;
+const int db6 = 7;
+const int db5 = 8;
+const int db4 = 9;
+const int rs = 12;
+const int en = 11;
+ 
+LiquidCrystal lcd(rs,en,db4,db5,db6,db7);
 
 #define sensor_pin A0
 int output_value;
@@ -62,14 +70,20 @@ void setup() {
 
 int count = 0;
 
+int startCounter = 0;
+
 void loop() {
   // put your main code here, to run repeatedly:
 
-  lcd.print("Starting program");
-  delay(100);
-  lcd.clear();
+  if ( startCounter == 0 )
+  {
+    lcd.print("Starting program");
+    delay(1000);
+    lcd.clear();
   
-  Serial.println(F("Starting of program"));
+    Serial.println(F("Starting of program"));
+    startCounter++;
+  }
 
   while ( count < 2)
   {
@@ -96,12 +110,13 @@ void loop() {
     count++;
   }
 
-
-  lcd.print("Done starting program");
-  delay(100);
+/*
+  lcd.print("Done starting");
+  delay(1000);
   lcd.clear();
 
   Serial.println(F("end of setup"));
+  */
 
   Serial.println(F("Setting digital pin 3 high"));
 
@@ -110,10 +125,10 @@ void loop() {
 
   //Turning on moisture sensor power
   digitalWrite(MOISTURE_SENSOR_1, HIGH);
-  delay(100);
+  delay(1000);
 
-  lcd.print("Reading sensor 1");
-  delay(100);
+  lcd.print("Reading S1");
+  delay(1000);
   lcd.clear();
   
   //Read moisture sensor from analog pin
@@ -143,6 +158,12 @@ void loop() {
     output_value = map(output_value, NO_MOISTURE, SATURATED_SOIL, 0, 100);
     Serial.print("Moisture % = ");
     Serial.println(output_value);
+
+    //display values on lcd
+    lcd.print("Moisture % = ");
+    lcd.print(output_value);
+    delay(2000);
+    lcd.clear();
   
     //Turn off moisture power sensor
     digitalWrite(MOISTURE_SENSOR_1, LOW);
@@ -174,7 +195,7 @@ void loop() {
   lcd.clear();
   lcd.print("Time to read sensors");
 
-  delay(100);
+  delay(1000);
   lcd.clear();
   
 }
