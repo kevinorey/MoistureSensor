@@ -5,12 +5,13 @@
 
 #include <LiquidCrystal.h>
 
-const int db7 = 6;
-const int db6 = 7;
-const int db5 = 8;
-const int db4 = 9;
-const int rs = 12;
-const int en = 11;
+//Defines for lcd screen
+#define db7 6
+#define db6 7
+#define db5 8
+#define db4 9
+#define rs 12
+#define en 11
  
 LiquidCrystal lcd(rs,en,db4,db5,db6,db7);
 
@@ -27,6 +28,9 @@ int output_value;
 #define NO_MOISTURE 1003
 #define SATURATED_SOIL 200
 #define NEED_TO_WATER_LEVEL 50
+
+#define SLEEP_TIME 5000
+#define LCD_SLEEP_TIME 1000
 
 void setup() {
 
@@ -78,7 +82,7 @@ void loop() {
   if ( startCounter == 0 )
   {
     lcd.print("Starting program");
-    delay(1000);
+    delay(LCD_SLEEP_TIME);
     lcd.clear();
   
     Serial.println(F("Starting of program"));
@@ -110,14 +114,6 @@ void loop() {
     count++;
   }
 
-/*
-  lcd.print("Done starting");
-  delay(1000);
-  lcd.clear();
-
-  Serial.println(F("end of setup"));
-  */
-
   Serial.println(F("Setting digital pin 3 high"));
 
   //Turn of green led light to indicate a read is taking place
@@ -128,7 +124,7 @@ void loop() {
   delay(1000);
 
   lcd.print("Reading S1");
-  delay(1000);
+  delay(LCD_SLEEP_TIME);
   lcd.clear();
   
   //Read moisture sensor from analog pin
@@ -138,7 +134,7 @@ void loop() {
 
   lcd.print("Value read = ");
   lcd.print(output_value);
-  delay(1000);
+  delay(LCD_SLEEP_TIME);
   lcd.clear();
 
   //If we get an invalid signal need to turn on red light to indicate an error has occurred
@@ -147,7 +143,7 @@ void loop() {
     Serial.print("INVALID VALUE READ FROM SOIL MOISTURE SENSOR.  VALUE = ");
     Serial.print(output_value);
     digitalWrite(RED_PIN, HIGH);
-    delay(5000);
+    delay(SLEEP_TIME);
 
     digitalWrite(RED_PIN, LOW);
   }
@@ -180,7 +176,7 @@ void loop() {
       digitalWrite(BLUE_PIN, HIGH);
 
       lcd.print("Time to water!!");
-      delay(5000);
+      delay(SLEEP_TIME);
 
       lcd.clear();
 
@@ -190,12 +186,12 @@ void loop() {
 
   //Time to wait until next read of moisture sensor
   lcd.print("Sleeping...");
-  delay(5000);
+  delay(SLEEP_TIME);
 
   lcd.clear();
   lcd.print("Time to read sensors");
 
-  delay(1000);
+  delay(LCD_SLEEP_TIME);
   lcd.clear();
   
 }
